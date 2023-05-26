@@ -1,0 +1,17 @@
+config:
+  workDir: /root/.jfrog
+  threads: 2
+  logging: INFO
+  checksumCalc: false
+  sourceRepo:
+    url: http://192.168.80.50:6967
+    username: admin
+    password: admin123
+  targetRepo:
+#    url: http://192.168.80.50:7755
+    url: http://test.gitee.work/artifactory
+#    url: https://dev.gitee.work/artifactory
+#    url: http://127.0.0.1:8080
+    username: admin
+    password: cq123456
+#    password: cq123456

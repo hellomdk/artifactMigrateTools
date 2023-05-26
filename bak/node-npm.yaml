@@ -1,0 +1,8 @@
+artifact:
+  - name: npm-demo-1.0.0.tgz
+    repo: hao-npm
+    protocolType: npm
+    path: npm-demo/-/npm-demo-1.0.0.tgz
+    sha1: 2755bb80bd7a9f381d8f5729b319b1130a6f0c31
+    sha256:
+    md5:

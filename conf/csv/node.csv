@@ -1,0 +1,9 @@
+"mdk.csv","hao-test-local","generic","mdk/mdk.csv",,,"f370d42c248411a62d3e67536b7598f5"
+"nginx.yaml","hao-test-local","generic","nginx/nginx.yaml",,,"1cc725a6ef0eca721b9cb944eefb822f"
+"mdk1684462045444.csv","hao-test-local","generic","mdk2/mdk1684462045444.csv",,,"f370d42c248411a62d3e67536b7598f5"
+"mdk1684462045645.csv","hao-test-local","generic","mdk2/mdk1684462045645.csv",,,"f370d42c248411a62d3e67536b7598f5"
+"mdk","hao_maven-local","maven","com/ncwu/mdk/1.0-SNAPSHOT/mdk-1.0-20230519.084130-3.jar",,"6fb633eea04a3098d3b84128a1bcaa3cd31aa83ed89060652cda162ac13d604f","262d7e615fa419547aad18b46c725403"
+"mdk","hao_maven-local","maven","com/ncwu/mdk/1.0-SNAPSHOT/mdk-1.0-20230519.084130-3.pom",,"1cd1df97c622a47659f7e13490cf7d7d5cbee385dd36527de35aa1f24d8bc92d","e1fcb4e91a0f989b88eb3ac9288d14ba"
+"npm-demo","hao-npm-local","npm","npm-demo/-/npm-demo-1.0.0.tgz","2755bb80bd7a9f381d8f5729b319b1130a6f0c31","2755bb80bd7a9f381d8f5729b319b1130a6f0c31",
+"osc/pipeinvincible/repo/local_repo/hao-docker/test/nginx","hao-docker-local","docker","v2/osc/pipeinvincible/repo/local_repo/hao-docker/test/nginx/manifests/v1.0",,"bfb112db4075460ec042ce13e0b9c3ebd982f93ae0be155496d050bb70006750",
+"artifactory","hao-helm-local","helm","artifactory-0.1.0.tgz",,"65d8bd7ffe802a6cd08e82ddbb1dfe04e716f7e3cecac17d6f2d4f1a52bfd681",

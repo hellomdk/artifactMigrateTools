@@ -1,0 +1,71 @@
+artifact:
+  - name: mdk.csv
+    repo: hao-test
+    protocolType: generic
+    path: mdk/mdk.csv
+    sha1:
+    sha256:
+    md5: f370d42c248411a62d3e67536b7598f5
+  - name: nginx.yaml
+    repo: hao-test
+    protocolType: generic
+    path: nginx/nginx.yaml
+    sha1:
+    sha256:
+    md5: 1cc725a6ef0eca721b9cb944eefb822f
+  - name: mdk1684462045444.csv
+    repo: hao-test
+    protocolType: generic
+    path: mdk2/mdk1684462045444.csv
+    sha1:
+    sha256:
+    md5: f370d42c248411a62d3e67536b7598f5
+  - name: mdk1684462045645.csv
+    repo: hao-test
+    protocolType: generic
+    path: mdk2/mdk1684462045645.csv
+    sha1:
+    sha256:
+    md5: f370d42c248411a62d3e67536b7598f5
+  - name: mdk-1.0-20230519.084130-3.jar
+    repo: hao-maven
+    protocolType: maven
+    path: com/ncwu/mdk/1.0-SNAPSHOT/mdk-1.0-20230519.084130-3.jar
+    sha1:
+    sha256:
+    md5: 262d7e615fa419547aad18b46c725403
+  - name: mdk-1.0-20230519.084130-3.jar.md5
+    repo: hao-maven
+    protocolType: maven
+    path: com/ncwu/mdk/1.0-SNAPSHOT/mdk-1.0-20230519.084130-3.jar.md5
+    sha1:
+    sha256:
+    md5: ede07f2873e9a150469174f0102a1a52
+  - name: mdk-1.0-20230519.084130-3.jar.sha1
+    repo: hao-maven
+    protocolType: maven
+    path: com/ncwu/mdk/1.0-SNAPSHOT/mdk-1.0-20230519.084130-3.jar.sha1
+    sha1:
+    sha256:
+    md5: 0889752ab581b004162d39913df9c345
+  - name: mdk-1.0-20230519.084130-3.pom
+    repo: hao-maven
+    protocolType: maven
+    path: com/ncwu/mdk/1.0-SNAPSHOT/mdk-1.0-20230519.084130-3.pom
+    sha1:
+    sha256:
+    md5: e1fcb4e91a0f989b88eb3ac9288d14ba
+  - name: mdk-1.0-20230519.084130-3.pom.md5
+    repo: hao-maven
+    protocolType: maven
+    path: com/ncwu/mdk/1.0-SNAPSHOT/mdk-1.0-20230519.084130-3.pom.md5
+    sha1:
+    sha256:
+    md5: beae3eca898c85a880563661d1d9ba37
+  - name: mdk-1.0-20230519.084130-3.pom.sha1
+    repo: hao-maven
+    protocolType: maven
+    path: com/ncwu/mdk/1.0-SNAPSHOT/mdk-1.0-20230519.084130-3.pom.sha1
+    sha1:
+    sha256:
+    md5: e298c19df3c0856a636462da7868cd9a

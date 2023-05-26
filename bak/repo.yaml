@@ -1,0 +1,218 @@
+repositories:
+  - repoKey: hao_maven-local
+    repoType: local
+    description:
+    layout: maven-2-default
+    protocolType: maven
+    project: pipe
+  - repoKey: hao_maven-remote
+    repoType: remote
+    description:
+    layout: maven-2-default
+    protocolType: maven
+    project: pipe
+    url: http://nexus.gitee.work/repository/gitee-baidu/
+    username: gitee
+    password: gitee
+  - repoKey: hao_maven
+    repoType: virtual
+    description:
+    layout: maven-2-default
+    protocolType: maven
+    project: pipe
+    selectedRepositories:
+      - repoKey: hao_maven-local
+        projectKey: pipe
+        key: hao_maven-local
+        type: local
+      - repoKey: hao_maven-remote
+        projectKey: pipe
+        key: hao_maven-remote
+        type: remote
+    defaultDeploymentRepo: hao_maven-local
+  - repoKey: zhangxiang-m-local
+    repoType: local
+    description:
+    layout: maven-2-default
+    protocolType: maven
+    project: pipe
+  - repoKey: zhangxiang-m-remote
+    repoType: remote
+    description:
+    layout: maven-2-default
+    protocolType: maven
+    project: pipe
+    url:
+    username:
+    password:
+  - repoKey: zhangxiang-m
+    repoType: virtual
+    description:
+    layout: maven-2-default
+    protocolType: maven
+    project: pipe
+    selectedRepositories:
+      - repoKey: zhangxiang-m-local
+        projectKey: pipe
+        key: zhangxiang-m-local
+        type: local
+      - repoKey: zhangxiang-m-remote
+        projectKey: pipe
+        key: zhangxiang-m-remote
+        type: remote
+    defaultDeploymentRepo: zhangxiang-m-local
+  - repoKey: generic-local
+    repoType: local
+    description:
+    layout: simple-default
+    protocolType: generic
+    project: pipe
+  - repoKey: generic-remote
+    repoType: remote
+    description:
+    layout: simple-default
+    protocolType: generic
+    project: pipe
+    url:
+    username:
+    password:
+  - repoKey: generic
+    repoType: virtual
+    description:
+    layout: simple-default
+    protocolType: generic
+    project: pipe
+    selectedRepositories:
+      - repoKey: generic-local
+        projectKey: pipe
+        key: generic-local
+        type: local
+      - repoKey: generic-remote
+        projectKey: pipe
+        key: generic-remote
+        type: remote
+    defaultDeploymentRepo: generic-local
+  - repoKey: hao-test-local
+    repoType: local
+    description: hao制品库测试
+    layout: simple-default
+    protocolType: generic
+    project: pipe
+  - repoKey: hao-test-remote
+    repoType: remote
+    description: hao制品库测试
+    layout: simple-default
+    protocolType: generic
+    project: pipe
+    url:
+    username:
+    password:
+  - repoKey: hao-test
+    repoType: virtual
+    description: hao制品库测试
+    layout: simple-default
+    protocolType: generic
+    project: pipe
+    selectedRepositories:
+      - repoKey: hao-test-local
+        projectKey: pipe
+        key: hao-test-local
+        type: local
+      - repoKey: hao-test-remote
+        projectKey: pipe
+        key: hao-test-remote
+        type: remote
+    defaultDeploymentRepo: hao-test-local
+  - repoKey: hao-npm-local
+    repoType: local
+    description: this is a npm repo
+    layout: npm-default
+    protocolType: npm
+    project: pipe
+  - repoKey: hao-npm-remote
+    repoType: remote
+    description: this is a npm repo
+    layout: npm-default
+    protocolType: npm
+    project: pipe
+    url:
+    username:
+    password:
+  - repoKey: hao-npm
+    repoType: virtual
+    description: this is a npm repo
+    layout: npm-default
+    protocolType: npm
+    project: pipe
+    selectedRepositories:
+      - repoKey: hao-npm-local
+        projectKey: pipe
+        key: hao-npm-local
+        type: local
+      - repoKey: hao-npm-remote
+        projectKey: pipe
+        key: hao-npm-remote
+        type: remote
+    defaultDeploymentRepo: hao-npm-local
+  - repoKey: hao-docker-local
+    repoType: local
+    description:
+    layout: docker
+    protocolType: docker
+    project: pipe
+  - repoKey: hao-docker-remote
+    repoType: remote
+    description:
+    layout: docker
+    protocolType: docker
+    project: pipe
+    url:
+    username:
+    password:
+  - repoKey: hao-docker
+    repoType: virtual
+    description:
+    layout: docker
+    protocolType: docker
+    project: pipe
+    selectedRepositories:
+      - repoKey: hao-docker-local
+        projectKey: pipe
+        key: hao-docker-local
+        type: local
+      - repoKey: hao-docker-remote
+        projectKey: pipe
+        key: hao-docker-remote
+        type: remote
+    defaultDeploymentRepo: hao-docker-local
+  - repoKey: hao-helm-local
+    repoType: local
+    description: this is a helm
+    layout: simple-default
+    protocolType: helm
+    project: pipe
+  - repoKey: hao-helm-remote
+    repoType: remote
+    description: this is a helm
+    layout: simple-default
+    protocolType: helm
+    project: pipe
+    url:
+    username:
+    password:
+  - repoKey: hao-helm
+    repoType: virtual
+    description: this is a helm
+    layout: simple-default
+    protocolType: helm
+    project: pipe
+    selectedRepositories:
+      - repoKey: hao-helm-local
+        projectKey: pipe
+        key: hao-helm-local
+        type: local
+      - repoKey: hao-helm-remote
+        projectKey: pipe
+        key: hao-helm-remote
+        type: remote
+    defaultDeploymentRepo: hao-helm-local

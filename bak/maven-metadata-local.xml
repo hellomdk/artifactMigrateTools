@@ -1,0 +1,23 @@
+{
+  "repo" : "Gradle_Test",
+  "path" : "/maven-metadata-local.xml",
+  "created" : "2022-10-17T10:55:11.045+08:00",
+  "createdBy" : "admin",
+  "lastModified" : "2022-10-17T10:55:11.040+08:00",
+  "modifiedBy" : "admin",
+  "lastUpdated" : "2022-10-17T10:55:11.045+08:00",
+  "downloadUri" : "http://192.168.80.97:8082/artifactory/Gradle_Test/maven-metadata-local.xml",
+  "mimeType" : "application/xml",
+  "size" : "710",
+  "checksums" : {
+    "sha1" : "4686e79397a4c57f5aee847ee59ce2ad56087d84",
+    "md5" : "b31bb4e9708b83830b5cac5bfe464efd",
+    "sha256" : "57ea005ca6785ac23d96ba9a682b5b2a0dae114ce7e6ccf2b0747ee9411cc4f8"
+  },
+  "originalChecksums" : {
+    "sha1" : "4686e79397a4c57f5aee847ee59ce2ad56087d84",
+    "md5" : "b31bb4e9708b83830b5cac5bfe464efd",
+    "sha256" : "57ea005ca6785ac23d96ba9a682b5b2a0dae114ce7e6ccf2b0747ee9411cc4f8"
+  },
+  "uri" : "http://192.168.80.97:8082/artifactory/api/storage/Gradle_Test/maven-metadata-local.xml"
+}

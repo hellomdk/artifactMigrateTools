@@ -1,0 +1,15 @@
+repositories:
+  - repoKey: hao-test
+    repoType: local
+    description: "this is a local repo"
+    layout: simple-default
+    protocolType: generic
+    projectKey: PipeInvincible
+    selectedRepositories: xxx
+    defaultDeploymentRepo: xxx
+  - repoKey: hao_maven
+    repoType: local
+    description: "this is a local maven repo"
+    layout: simple-default
+    protocolType: maven
+    projectKey: PipeInvincible

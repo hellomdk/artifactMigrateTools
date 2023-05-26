@@ -1,0 +1,6 @@
+"hao_maven",,"maven-2-default","maven","PipeInvincible","proxy-hao_maven168448484972902242","http://nexus.gitee.work/repository/gitee-baidu/","gitee","gitee"
+"hao_maven",,"maven-2-default","maven","PipeInvincible","proxy-hao_maven2","http://maven.aliyun.com/nexus/content/groups/public/","",""
+"hao-test","hao制品库测试","simple-default","generic","PipeInvincible",,,,
+"hao-npm","this is a npm repo","npm-default","npm","PipeInvincible",,,,
+"hao-docker",,"docker","docker","PipeInvincible",,,,
+"hao-helm","this is a helm","simple-default","helm","PipeInvincible",,,,
