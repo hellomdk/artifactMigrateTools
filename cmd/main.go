@@ -1,105 +1,59 @@
 package main
 
 import (
-	"fmt"
+	"artifactMigrateTools/internal/config"
+	"artifactMigrateTools/internal/migrate"
 	"github.com/urfave/cli/v2"
-	"jfrogToArtifact/pkg/artifact/jfrog"
-	_ "jfrogToArtifact/pkg/artifact/jfrog"
-	"jfrogToArtifact/pkg/artifact/config"
 	"os"
 )
-
-func test() {
-	config, er := config.NewConfig()
-	if er != nil {
-		fmt.Println(config)
-	}
-	client := &jfrog.Client{
-		Username: config.SourceRepo.Username,
-		Password: config.SourceRepo.Password,
-	}
-	users, err := client.Ping()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(string(users))
-}
 
 func main() {
 	app := &cli.App{
 		Name:    "Jfrog migrate to Artifact CLI",
 		Version: "0.0.1",
 		Flags: []cli.Flag{
-			&cli.StringFlag{Name: "workspace", Aliases: []string{"w"}, Usage: "工作空间"},
-			&cli.StringFlag{Name: "setConfig", Aliases: []string{"sc"}, Usage: "系统配置"},
+			&cli.StringFlag{Name: "init", Aliases: []string{"i"}, Usage: "初始化配置, value[config]"},
 			&cli.StringFlag{Name: "verifyConfig", Aliases: []string{"vc"}, Usage: "配置校验"},
-			&cli.StringFlag{Name: "getRepositories", Aliases: []string{"gr"}, Usage: "获取仓库列表"},
-			&cli.StringFlag{Name: "migrateRepo", Aliases: []string{"mr"}, Usage: "同步仓库"},
-			&cli.StringFlag{Name: "migrateArtifact", Aliases: []string{"ma"}, Usage: "同步制品"},
+			&cli.StringFlag{Name: "genericProject", Aliases: []string{"gp"}, Usage: "生成空间project.yaml, value[all]"},
+			&cli.StringFlag{Name: "migrateProject", Aliases: []string{"mp"}, Usage: "迁移空间，value[all,projectKey]"},
+			&cli.StringFlag{Name: "genericRepo", Aliases: []string{"gr"}, Usage: "生成仓库repo.yaml, value[all]"},
+			&cli.StringFlag{Name: "migrateRepo", Aliases: []string{"mr"}, Usage: "同步仓库，value[all,projectKey]"},
+			&cli.StringFlag{Name: "genericArtifacts", Aliases: []string{"ga"}, Usage: "生成制品artifact.yaml, [all,projectKey]"},
+			&cli.StringFlag{Name: "migrateArtifacts", Aliases: []string{"ma"}, Usage: "同步制品，value[all,projectKey]"},
 		},
 		Action: func(context *cli.Context) error {
 			var args = make(map[string]string)
-			args["SYSTEM_WORKSPACE"] = context.String("workspace")
-			setConfig := context.String("setConfig")
-			verifyConfig := context.String("verifyConfig")
-			getRepositories := context.String("getRepositories")
-			migrateRepo := context.String("migrateRepo")
-			migrateArtifact := context.String("migrateArtifact")
+			args["init"] = GetArgsValue(context, "init", "i")
+			args["verifyConfig"] = GetArgsValue(context, "verifyConfig", "vc")
+			args["genericProject"] = GetArgsValue(context, "genericProject", "gp")
+			args["migrateProject"] = GetArgsValue(context, "migrateProject", "mp")
+			args["genericRepo"] = GetArgsValue(context, "genericRepo", "gr")
+			args["migrateRepo"] = GetArgsValue(context, "migrateRepo", "mr")
+			args["genericArtifacts"] = GetArgsValue(context, "genericArtifacts", "ga")
+			args["migrateArtifacts"] = GetArgsValue(context, "migrateArtifacts", "ma")
 
-			config, er := config.NewConfig()
-			if er != nil {
-				fmt.Println(config)
-			}
-			//newOut, er := Gohttp.NewGohttp(&jobcenter.Context{
-			//	Config: newConfig,
-			//})
-			//if newOut != nil {
-			//
-			//}
-			//if er != nil {
-			//	return er
-			//}
-			var err error
+			contextConfig := config.NewContext(args)
+			contextConfig.InitLogger(contextConfig)
 
-			if setConfig != "" {
-
-			}
-
-			if verifyConfig == "" {
-				client := &jfrog.Client{
-					Username: config.SourceRepo.Username,
-					Password: config.SourceRepo.Password,
-				}
-				users, err := client.GetRepositories(config)
-				if err != nil {
-					fmt.Println(err)
-					return err
-				}
-				fmt.Println(users)
-			}
-
-			if getRepositories != "" {
-
-			}
-
-			if migrateRepo != "" {
-
-			}
-			if migrateArtifact != "" {
-
-			}
-
-			if err != nil {
-				return err
-			}
-
+			newCommand := migrate.NewMigrateExcute(contextConfig)
+			newCommand.Excute()
 			return nil
 		},
 	}
+	contextConfig := config.NewContextNoArgs()
+	contextConfig.InitLogger(contextConfig)
 	err := app.Run(os.Args)
 	if err != nil {
 		println(err.Error())
 		os.Exit(1)
 	}
+}
+
+func GetArgsValue(context *cli.Context, name, aliases string) string {
+	if context.String(name) != "" {
+		return context.String(name)
+	} else if context.String(aliases) != "" {
+		return context.String(aliases)
+	}
+	return ""
 }

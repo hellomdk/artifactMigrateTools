@@ -1,6 +1,6 @@
-"hao_maven",,"maven-2-default","maven","PipeInvincible","proxy-hao_maven168448484972902242","http://nexus.gitee.work/repository/gitee-baidu/","gitee","gitee"
-"hao_maven",,"maven-2-default","maven","PipeInvincible","proxy-hao_maven2","http://maven.aliyun.com/nexus/content/groups/public/","",""
-"hao-test","hao制品库测试","simple-default","generic","PipeInvincible",,,,
-"hao-npm","this is a npm repo","npm-default","npm","PipeInvincible",,,,
-"hao-docker",,"docker","docker","PipeInvincible",,,,
-"hao-helm","this is a helm","simple-default","helm","PipeInvincible",,,,
+"repo-maven",,"maven-2-default","maven","hellomdk","proxy-repo-maven168624249796114272","http://maven.aliyun.com/nexus/content/groups/public/",,
+"repo-maven",,"maven-2-default","maven","hellomdk","proxy-repo-maven168624249796172700","https://mirrors.huaweicloud.com/repository/maven/",,
+"mdk-npm","这是一个npm","npm-default","npm","hellomdk","proxy-mdk-npm168624255980543853","https://registry.npmmirror.com/",,
+"mdk-generic","这是一个通用仓库","simple-default","generic","hellomdk",,,,
+"mdk-docker",,"simple-default","docker","hellomdk",,,,
+"mdk-helm","这是一个helm","simple-default","helm","hellomdk",,,,
