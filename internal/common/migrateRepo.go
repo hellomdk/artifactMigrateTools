@@ -5,6 +5,7 @@ import (
 	"artifactMigrateTools/internal/config"
 	"artifactMigrateTools/internal/model"
 	"artifactMigrateTools/internal/util"
+	"fmt"
 	"net/http"
 )
 
@@ -40,6 +41,21 @@ func CreateRepository(context *config.Context, repositories model.Repositories) 
 		SelectedRepositories:  ConvertSelectedRepositories(repositories.SelectedRepositories),
 		ResolvedRepositories:  ConvertSelectedRepositories(repositories.SelectedRepositories),
 		DefaultDeploymentRepo: repositories.DefaultDeploymentRepo,
+	}
+
+	flag := repoCli.ExistRepository(context, repoData.RepoKey)
+	if flag {
+		// 仓库已存在直接返回
+		context.Loggers.SendLoggerInfo(fmt.Sprintf("仓库：%s, 已存在, 无需创建", repoData.RepoKey))
+		return true
+	}
+
+	projectFlag := repoCli.ExistProject(context, repoData.ProjectKey)
+	if !projectFlag {
+		// 空间不存在时设置为游离仓库
+		context.Loggers.SendLoggerInfo(fmt.Sprintf("仓库：%s, 对应空间 %s 不存在, 设置为游离仓库",
+			repoData.RepoKey, repoData.ProjectKey))
+		repoData.ProjectKey = ""
 	}
 
 	got := repoCli.CreateRepository(context, repoData)

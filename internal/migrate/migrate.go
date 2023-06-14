@@ -7,7 +7,6 @@ import (
 	"artifactMigrateTools/internal/model"
 	"artifactMigrateTools/internal/strage"
 	"artifactMigrateTools/internal/util"
-	"artifactMigrateTools/internal/worker"
 	"fmt"
 	"net/http"
 )
@@ -90,29 +89,29 @@ func (orm RepoMigrate) MigrateArti(context *config.Context, artiList []model.Art
 	// 开启携程迁移制品文件
 	context.ThreadPool.Run()
 	for _, arti := range artiList {
-		context.ThreadPool.AddTask(
-			worker.Task{
-				Handler: func(args interface{}) {
-					// 执行任务的代码
-					if !arti.Migrated {
-						//log.Println("正在同步制品: ", arti.Path)
-						strategy := strage.NewStrategy(arti.ProtocolType, migrateType)
-						arti.Migrated = strategy.MigrateArti(context, arti)
-						if arti.Migrated {
-							context.Loggers.SendLoggerInfo(fmt.Sprintf("goroutine ID: %d", util.GetGoroutineID()),
-								"迁移制品: ", arti.Path, "成功")
-						} else {
-							context.Loggers.SendLoggerError(fmt.Sprintf("goroutine ID: %d, 迁移制品: %s 失败",
-								util.GetGoroutineID(), arti.Path), nil)
-						}
-					} else {
-						context.Loggers.SendLoggerInfo(fmt.Sprintf("goroutine ID: %d", util.GetGoroutineID()),
-							"制品: ", arti.Path, "已存在")
-					}
-					artiResultList = append(artiResultList, arti)
-				},
-				Args: arti,
-			})
+		//context.ThreadPool.AddTask(
+		//	worker.Task{
+		//		Handler: func(args interface{}) {
+		// 执行任务的代码
+		if !arti.Migrated {
+			//log.Println("正在同步制品: ", arti.Path)
+			strategy := strage.NewStrategy(arti.ProtocolType, migrateType)
+			arti.Migrated = strategy.MigrateArti(context, arti)
+			if arti.Migrated {
+				context.Loggers.SendLoggerInfo(fmt.Sprintf("goroutine ID: %d", util.GetGoroutineID()),
+					"迁移制品: ", arti.Path, "成功")
+			} else {
+				context.Loggers.SendLoggerError(fmt.Sprintf("goroutine ID: %d, 迁移制品: %s 失败",
+					util.GetGoroutineID(), arti.Path), nil)
+			}
+		} else {
+			context.Loggers.SendLoggerInfo(fmt.Sprintf("goroutine ID: %d", util.GetGoroutineID()),
+				"制品: ", arti.Path, "已存在")
+		}
+		artiResultList = append(artiResultList, arti)
+		//	},
+		//	Args: arti,
+		//})
 	}
 	success := common.CountMigrateArtiSuccess(artiResultList)
 	context.Loggers.SendLoggerInfo(fmt.Sprintf("仓库: %s 制品迁移完成，迁移成功数量: %d 迁移失败数量: %d ", repoKey, success, len(artiList)-success))

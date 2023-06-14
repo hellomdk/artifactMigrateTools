@@ -29,7 +29,10 @@ func (r *Repo) ExistRepository(context *config.Context, repoKey string) bool {
 	url = strings.Replace(url, "{repoKey}", repoKey, 1)
 	var cacheConfig = &RepoRepository{}
 
-	_, err := util.Client.Get(r.HttpClient.BaseURL+url, r.HttpClient.Header, nil, cacheConfig)
+	statusCode, err := util.Client.Get(r.HttpClient.BaseURL+url, r.HttpClient.Header, nil, cacheConfig)
+	if statusCode == 404 {
+		return false
+	}
 	if err != nil {
 		context.Loggers.SendLoggerError("API判断仓库是否存在失败: ", err)
 	}
@@ -159,6 +162,24 @@ func (r *Repo) CreateProject(context *config.Context, project string) bool {
 		DisplayName: project,
 	}
 	statusCode, err := util.Client.Post(r.HttpClient.BaseURL+url, r.HttpClient.Header, body, nil)
+	if err != nil {
+		context.Loggers.SendLoggerError("API创建空间失败: ", err)
+	}
+	if statusCode == 200 {
+		return true
+	}
+	return false
+}
+
+/**
+创建空间
+*/
+func (r *Repo) ExistProject(context *config.Context, projectKey string) bool {
+	url := "/ui/project/{projectKey}"
+	url = strings.Replace(url, "{projectKey}", projectKey, 1)
+
+	statusCode, err := util.Client.Get(r.HttpClient.BaseURL+url, r.HttpClient.Header, nil, nil)
+
 	if err != nil {
 		context.Loggers.SendLoggerError("API创建空间失败: ", err)
 	}

@@ -143,7 +143,7 @@ func (c HttpConfig) requestReturnBodyAndStatusCode(method string, url string, co
 func (c HttpConfig) request(method string, url string, contextType string, body io.Reader, headers http.Header, res interface{}) (statusCode int, err error) {
 	statusCode, _, err = c.requestReturnBodyAndStatusCode(method, url, contextType, body, headers, res)
 	if err != nil {
-		return 0, err
+		return statusCode, err
 	}
 	return statusCode, err
 }
