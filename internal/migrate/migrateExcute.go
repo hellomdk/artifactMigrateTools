@@ -47,7 +47,7 @@ func (me MigrateExcute) ExcuteVerifyConfig(content string) {
 		me.Context.Loggers.SendLoggerError("读取config.yaml文件失败", er)
 	}
 	if content != "" {
-		switch config.SourceRepo.Type {
+		switch content {
 		case "oldRepo":
 			orm := migrateNexus.NewNexusRepoMigrate(config)
 			orm.VerifyConfig(me.Context)
@@ -194,35 +194,21 @@ func (me MigrateExcute) ExcuteGenericArtifacts(content string) {
 
 func (me MigrateExcute) ExcuteMigrateArtifacts(content string) {
 	config, _ := config.NewConfig()
+	me.Context.InitWorkerPool(me.Context)
 
 	if content != "" {
 		rms := new(RepoMigrateService)
 		orm := new(RepoMigrate)
-		if content == "all" {
-			var artiResultList []model.Arti
+		var artiResultList []model.Arti
+		repoList := rms.GetRepoListByProjectKey(content)
+		for _, item := range repoList {
+			artiResultLists := orm.MigrateArti(me.Context, rms.GetArtiListByRepoKey(item.RepoKeyMapping), item.RepoKey, config.SourceRepo.Type)
+			artiResultList = append(artiResultList, artiResultLists...)
+		}
+		if artiResultList != nil {
 			artiAllList := rms.GetArtiListByAll()
-			repoList := rms.GetRepoListByAll()
-			for _, repoItem := range repoList {
-				repoListByRepoKey := rms.GetArtiListByRepoKey(repoItem.RepoKey)
-				artiResults := orm.MigrateArti(me.Context, repoListByRepoKey, repoItem.RepoKey, config.SourceRepo.Type)
-				artiResultList = append(artiResultList, artiResults...)
-			}
-			if artiResultList != nil {
-				mergeList := common.MergeMigratedArti(artiAllList, artiResultList)
-				common.UpdateNodeYaml(mergeList)
-			}
-		} else {
-			artiAllList := rms.GetArtiListByAll()
-			var artiResultList []model.Arti
-			repoList := rms.GetRepoListByProjectKey(content)
-			for _, item := range repoList {
-				artiResultLists := orm.MigrateArti(me.Context, rms.GetArtiListByRepoKey(item.RepoKeyMapping), content, config.SourceRepo.Type)
-				artiResultList = append(artiResultList, artiResultLists...)
-			}
-			if artiResultList != nil {
-				mergeList := common.MergeMigratedArti(artiAllList, artiResultList)
-				common.UpdateNodeYaml(mergeList)
-			}
+			mergeList := common.MergeMigratedArti(artiAllList, artiResultList)
+			common.UpdateNodeYaml(mergeList)
 		}
 	}
 }

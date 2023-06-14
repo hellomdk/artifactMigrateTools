@@ -2,6 +2,7 @@ package config
 
 import (
 	"artifactMigrateTools/internal/logger"
+	"artifactMigrateTools/internal/worker"
 	"fmt"
 	"os"
 	"path"
@@ -18,8 +19,9 @@ const (
 )
 
 type Context struct {
-	Pool    map[string]string
-	Loggers logger.Loggers
+	Pool       map[string]string
+	ThreadPool worker.WorkerPool
+	Loggers    logger.Loggers
 }
 
 func NewContextNoArgs() *Context {
@@ -35,6 +37,12 @@ func NewContext(pool map[string]string) *Context {
 func (c Context) InitLogger(context *Context) {
 	loggers := logger.NewLogger(c.GetLoggerPath())
 	context.Loggers = *loggers
+}
+func (c Context) InitWorkerPool(context *Context) {
+	config, _ := NewConfig()
+
+	threadPool := worker.NewWorkerPool(config.Threads)
+	context.ThreadPool = *threadPool
 }
 
 func (c Context) GetWorkspace() string {

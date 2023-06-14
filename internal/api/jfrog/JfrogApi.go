@@ -28,9 +28,9 @@ client.GetRepositories()
 func (jf *Jfrog) GetRepositories(context *config.Context) []JfrogRepository {
 	url := "/api/repositories"
 	var cacheConfig = &[]JfrogRepository{}
-	statusCode, _ := util.Client.Get(jf.HttpClient.BaseURL+url, jf.HttpClient.Header, nil, cacheConfig)
-	if statusCode != 200 {
-		context.Loggers.SendLoggerError(fmt.Sprint("API获取仓库列表失败: ", statusCode), nil)
+	_, err := util.Client.Get(jf.HttpClient.BaseURL+url, jf.HttpClient.Header, nil, cacheConfig)
+	if err != nil {
+		context.Loggers.SendLoggerError(fmt.Sprint("API获取仓库列表失败: ", err), nil)
 	}
 	return *cacheConfig
 }

@@ -34,25 +34,30 @@ func NewLogger(filePath string) *Loggers {
 	// 通过New方法自定义Logger，New的参数对应的是Logger结构体的output, prefix和flag字段
 	logger := log.New(f, "[INFO] ", log.LstdFlags|log.Lshortfile|log.Lmsgprefix)
 
+	// 设置日志级别
+	//logger.SetOutput(os.Stdout) // 输出到控制台
+	//logger.SetOutput(os.Stderr) // 输出到标准错误流
+
 	loggerObj := &Loggers{
 		Logs: *logger,
 	}
 	return loggerObj
 }
 
-func (l *Loggers) SendLogger(level int, content ...string) {
+func (l *Loggers) SendLoggerInfo(content ...string) {
+	l.Logs.SetPrefix("[INFO]")
+	l.Logs.Println(content)
+	log.SetPrefix("[INFO]")
 	log.Println(content)
-	log.SetFlags(level)
+}
+func (l *Loggers) SendLoggerDebug(content ...string) {
+	l.Logs.SetPrefix("[DEBUG]")
 	l.Logs.Println(content)
 }
 
-func (l *Loggers) SendLoggerInfo(content ...string) {
-	l.SendLogger(INFO, content...)
-}
-func (l *Loggers) SendLoggerDebug(content ...string) {
-	l.SendLogger(DEBUG, content...)
-}
-
 func (l *Loggers) SendLoggerError(content string, err error) {
-	l.SendLogger(ERROR, fmt.Sprint(content, err))
+	l.Logs.SetPrefix("[ERROR]")
+	l.Logs.Println(fmt.Sprint(content, err))
+	log.SetPrefix("[ERROR]")
+	log.Println(fmt.Sprint(content, err))
 }
