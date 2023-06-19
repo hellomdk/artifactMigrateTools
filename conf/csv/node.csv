@@ -4,4 +4,4 @@
 "mdk","repo-maven-local","repo-maven1686242497961","maven","com/ncwu/mdk/1.0/mdk-1.0.jar",,"ce8a32037371fe0ffce03d42b51148cc57272e96e965cf8c8c4372b093e5a440","11733f026cd57b82966bc65ea16618b3"
 "mdk","repo-maven-local","repo-maven1686242497961","maven","com/ncwu/mdk/1.0/mdk-1.0.pom",,"95185429e3dfcd0f864a728d768cd6ee67a900676de747ea3e77f28b0ad3370e","ddbd5b509e8318e8b010961bf8407737"
 "artifactory","mdk-helm-local","mdk-helm1686242523230","helm","artifactory-0.1.0.tgz",,"65d8bd7ffe802a6cd08e82ddbb1dfe04e716f7e3cecac17d6f2d4f1a52bfd681",
-"npm-demo","mdk-npm-local","mdk-npm1686242559805","npm","npm-demo/-/npm-demo-1.0.0.tgz","2755bb80bd7a9f381d8f5729b319b1130a6f0c31","2755bb80bd7a9f381d8f5729b319b1130a6f0c31",
+"npm-demo","mdk-npm-local","mdk-npm1686242559805","npm","npm-demo/-/npm-demo-1.0.0.tgz","2755bb80bd7a9f381d8f5729b319b1130a6f0c31",,

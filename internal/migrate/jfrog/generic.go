@@ -47,7 +47,7 @@ func (jg JfrogGeneric) GenericJfrogArtiYaml(context *config.Context, projectKey 
 		if repoItem.RepoType == "virtual" {
 			continue
 		}
-		artiList := jm.GetJfrogArtifact(context, repoItem.RepoKey)
+		artiList := jm.GetJfrogArtifact(context, repoItem)
 		filterList := FilterIndex(artiList)
 		resultList = append(resultList, filterList...)
 	}

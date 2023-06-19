@@ -27,7 +27,7 @@ func (n *Nexus) Ping(context *config.Context) (string, error) {
 client.CreateArtifact("Gradle_Test")
 */
 func (n *Nexus) GetItemList(context *config.Context, repoKey string) NexusFileItem {
-	url := "/service/rest/v1/components1?repository={repoKey}"
+	url := "/service/rest/v1/components?repository={repoKey}"
 	url = strings.Replace(url, "{repoKey}", repoKey, 1)
 
 	var cacheConfig = &NexusFileItem{}

@@ -50,7 +50,7 @@ func (jm JfrogMigrate) GetJfrogRepositories(context *config.Context) []model.Rep
 
 		repoItem.RepoKey = item.Key
 		repoItem.RepoKeyMapping = item.Key
-		repoItem.ProtocolType = repositoryDetails.PackageType
+		repoItem.ProtocolType = strings.ToLower(item.PackageType)
 		repoItem.Layout = repositoryDetails.RepoLayoutRef
 		repoItem.RepoType = strings.ToLower(item.Type)
 
@@ -90,18 +90,19 @@ func (jm JfrogMigrate) GetJfrogRepositoriesByProjectKey(context *config.Context,
 	return repoList
 }
 
-func (jm JfrogMigrate) GetJfrogArtifact(context *config.Context, repoKey string) []model.Arti {
-	fileItemList := jm.Jfrog.GetArtifacts(context, repoKey)
+func (jm JfrogMigrate) GetJfrogArtifact(context *config.Context, repositories model.Repositories) []model.Arti {
+	fileItemList := jm.Jfrog.GetArtifacts(context, repositories.RepoKey)
 	var artiList []model.Arti
 	for _, item := range fileItemList.Files {
 		var artiItem model.Arti
 		artiItem.Name = item.Uri
-		artiItem.Repo = repoKey
-		artiItem.RepoMapping = repoKey
+		artiItem.Repo = repositories.RepoKey
+		artiItem.RepoMapping = repositories.RepoKey
 		artiItem.Path = item.Uri
 		artiItem.Sha1 = item.Sha1
 		artiItem.Sha256 = item.Sha2
 		artiItem.Md5 = item.Md5
+		artiItem.ProtocolType = repositories.ProtocolType
 		artiList = append(artiList, artiItem)
 	}
 	return artiList

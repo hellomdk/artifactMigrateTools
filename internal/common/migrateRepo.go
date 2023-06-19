@@ -24,6 +24,7 @@ func CreateRepository(context *config.Context, repositories model.Repositories) 
 	}
 	util.Auth(repoCli.HttpClient)
 
+	projectKey := util.If(repositories.ProjectKeyMapping == "", repositories.ProjectKey, repositories.ProjectKeyMapping).(string)
 	repoData := repo.RepoRepository{
 		RepoKey:     repositories.RepoKeyMapping,
 		RepoType:    repositories.RepoType,
@@ -37,7 +38,7 @@ func CreateRepository(context *config.Context, repositories model.Repositories) 
 			ProtocolType:     repositories.ProtocolType,
 			DockerApiVersion: "V2",
 		},
-		ProjectKey:            repositories.ProjectKeyMapping,
+		ProjectKey:            projectKey,
 		SelectedRepositories:  ConvertSelectedRepositories(repositories.SelectedRepositories),
 		ResolvedRepositories:  ConvertSelectedRepositories(repositories.SelectedRepositories),
 		DefaultDeploymentRepo: repositories.DefaultDeploymentRepo,
@@ -55,7 +56,7 @@ func CreateRepository(context *config.Context, repositories model.Repositories) 
 		// 空间不存在时设置为游离仓库
 		context.Loggers.SendLoggerInfo(fmt.Sprintf("仓库：%s, 对应空间 %s 不存在, 设置为游离仓库",
 			repoData.RepoKey, repoData.ProjectKey))
-		repoData.ProjectKey = ""
+		//repoData.ProjectKey = ""
 	}
 
 	got := repoCli.CreateRepository(context, repoData)

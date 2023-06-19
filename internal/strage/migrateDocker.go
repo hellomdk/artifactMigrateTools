@@ -5,7 +5,8 @@ import (
 	"artifactMigrateTools/internal/common"
 	"artifactMigrateTools/internal/config"
 	"artifactMigrateTools/internal/model"
-	strage "artifactMigrateTools/internal/strage/nexus"
+	strageJfrog "artifactMigrateTools/internal/strage/jfrog"
+	strageNexus "artifactMigrateTools/internal/strage/nexus"
 	"artifactMigrateTools/internal/util"
 	"fmt"
 	"log"
@@ -20,10 +21,13 @@ type MigrateDocker struct {
 func NewMigrateDocker(migrateType string) Migrate {
 	switch migrateType {
 	case "oldRepo":
-		instance := strage.NewNexusMigrateDocker()
+		instance := strageNexus.NewNexusMigrateDocker()
 		return instance
 	case "nexus":
-		instance := strage.NewNexusMigrateDocker()
+		instance := strageNexus.NewNexusMigrateDocker()
+		return instance
+	case "jfrog":
+		instance := strageJfrog.NewJfrogMigrateDocker()
 		return instance
 	default:
 		instance := new(MigrateDocker)

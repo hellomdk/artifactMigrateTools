@@ -38,9 +38,10 @@ func (md NexusMigrateDocker) MigrateArti(context *config.Context, arti model.Art
 			Header:   http.Header{},
 		},
 	}
-	dockerManifests := nx.ReadManifests(context, arti.OriginRepo, arti.Path)
+	repoK := util.If(arti.OriginRepo == "", arti.Repo, arti.OriginRepo).(string)
+	dockerManifests := nx.ReadManifests(context, repoK, arti.Path)
 
-	repoKey := arti.VirtualRepo
+	repoKey := util.If(arti.VirtualRepo == "", repoK, arti.VirtualRepo).(string)
 	arr := strings.Split(dockerManifests.Name, repoKey+"/")
 	repoName := arr[1]
 
@@ -70,16 +71,14 @@ func CreateDockerLayer(context *config.Context, artiList []model.Arti) bool {
 }
 
 func CreateDockerManifest(context *config.Context, dockerManifests nexus.NexusDockerManifests, artiConf model.Arti) bool {
+	repoName := util.If(artiConf.VirtualRepo == "", artiConf.RepoMapping, artiConf.VirtualRepo).(string)
 
-	repoKey := artiConf.VirtualRepo
-	arr := strings.Split(dockerManifests.Name, repoKey+"/")
-	repoName := arr[1]
 	version := dockerManifests.Tag
 	sha256 := artiConf.Sha256
 	// 获取属性
 	prop := GetProp(repoName, version, sha256)
 	var arti model.Arti
-	path := path.Join(repoName, version, "manifest.json")
+	path := path.Join(artiConf.Path, "manifest.json")
 	arti.Name = "manifest.json"
 	arti.Repo = artiConf.Repo
 	arti.ProtocolType = artiConf.ProtocolType
@@ -106,6 +105,7 @@ func AssembleLaysList(artiConfig model.Arti, manifestsConf nexus.NexusDockerMani
 		arti.Repo = artiConfig.Repo
 		arti.ProtocolType = artiConfig.ProtocolType
 		arti.Path = path.Join(artiConfig.Path, arti.Name)
+		// todo
 		arti.Sha256 = strings.Replace(sha256, "sha256:", "", 1)
 		artiList = append(artiList, arti)
 	}

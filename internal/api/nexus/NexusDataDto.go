@@ -62,9 +62,9 @@ type NexusMaven struct {
 }
 
 type NexusProxy struct {
-	RemoteUrl      string `json:"remoteUrl"`
-	ContentMaxAge  int    `json:"contentMaxAge"`
-	MetadataMaxAge string `json:"metadataMaxAge"`
+	RemoteUrl      string  `json:"remoteUrl"`
+	ContentMaxAge  float32 `json:"contentMaxAge"`
+	MetadataMaxAge float32 `json:"metadataMaxAge"`
 }
 
 type NexusHttpclient struct {

@@ -63,7 +63,7 @@ func (me MigrateExcute) ExcuteVerifyConfig(content string) {
 		default:
 			ormNexus := migrateNexus.NewNexusRepoMigrate(config)
 			ormNexus.VerifyConfig(me.Context)
-			orm := NewRepoMigrate(config)
+			orm := NewConfigMigrate(config)
 			orm.VerifyConfig(me.Context)
 			return
 		}
@@ -203,9 +203,15 @@ func (me MigrateExcute) ExcuteMigrateArtifacts(content string) {
 		repoList := rms.GetRepoListByProjectKey(content)
 		for _, item := range repoList {
 			artiResultLists := orm.MigrateArti(me.Context, rms.GetArtiListByRepoKey(item.RepoKeyMapping), item.RepoKey, config.SourceRepo.Type)
+
+			// 索引更新
+			orm := NewConfigMigrate(config)
+			orm.ReIndex(me.Context, item.RepoKey)
 			artiResultList = append(artiResultList, artiResultLists...)
 		}
+
 		if artiResultList != nil {
+			// 回写文件，反转制品状态
 			artiAllList := rms.GetArtiListByAll()
 			mergeList := common.MergeMigratedArti(artiAllList, artiResultList)
 			common.UpdateNodeYaml(mergeList)

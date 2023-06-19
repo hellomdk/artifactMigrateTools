@@ -7,6 +7,7 @@ import (
 	"artifactMigrateTools/internal/util"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func UpdateArtifactSum(context *config.Context, arti model.Arti) bool {
@@ -63,6 +64,7 @@ func UpdateArtifactProp(context *config.Context, repoKey, repoPath, properties s
 		},
 	}
 	util.Auth(jf.HttpClient)
+	repoPath = strings.TrimPrefix(repoPath, "/")
 
 	got := jf.UpdateArtifactProperties(context, repoKey, repoPath, properties)
 	return got

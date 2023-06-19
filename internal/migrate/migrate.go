@@ -15,7 +15,7 @@ type RepoMigrate struct {
 	Repo repo.Repo
 }
 
-func NewRepoMigrate(config *model.Config) RepoMigrate {
+func NewConfigMigrate(config *model.Config) RepoMigrate {
 	r := &repo.Repo{
 		util.HttpClient{
 			BaseURL:  config.TargetRepo.URL,
@@ -117,4 +117,16 @@ func (orm RepoMigrate) MigrateArti(context *config.Context, artiList []model.Art
 	context.Loggers.SendLoggerInfo(fmt.Sprintf("仓库: %s 制品迁移完成，迁移成功数量: %d 迁移失败数量: %d ", repoKey, success, len(artiList)-success))
 
 	return artiResultList
+}
+
+/**
+刷新索引
+*/
+func (orm RepoMigrate) ReIndex(context *config.Context, repoKey string) bool {
+	flag := orm.Repo.ReIndex(context, repoKey)
+	if flag {
+		context.Loggers.SendLoggerInfo(fmt.Sprintf("仓库: %s, 索引刷新成功！", repoKey))
+		return true
+	}
+	return false
 }

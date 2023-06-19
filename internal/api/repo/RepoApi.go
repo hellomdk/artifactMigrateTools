@@ -4,6 +4,8 @@ import (
 	"artifactMigrateTools/internal/config"
 	"artifactMigrateTools/internal/util"
 	"encoding/json"
+	"fmt"
+	"net/url"
 	"strings"
 )
 
@@ -71,12 +73,12 @@ func (r *Repo) CreateRepository(context *config.Context, repo RepoRepository) bo
 
 	var cacheConfig = &RepoRepository{}
 	//将切片进行序列化
-	_, err := json.Marshal(repo)
+	data, err := json.Marshal(repo)
 	if err != nil {
 		context.Loggers.SendLoggerError("API创建仓库参数序列化失败: ", err)
 	}
 	//输出序列化之后的结果
-	//fmt.Printf("序列化后=%v\n", string(data))
+	fmt.Printf("序列化后=%v\n", string(data))
 
 	statusCode, err := util.Client.Post(r.HttpClient.BaseURL+url, r.HttpClient.Header, repo, cacheConfig)
 	if err != nil {
@@ -137,12 +139,15 @@ func (r *Repo) UpdateArtifactCheckSum(context *config.Context, repoKey, repoPath
 更新制品属性
 */
 func (r *Repo) UpdateArtifactProperties(context *config.Context, repoKey, repoPath, properties string) bool {
-	url := "/open/api/v1/storage/properties/{repoKey}/{repoPath}?properties={properties}"
-	url = strings.Replace(url, "{repoKey}", repoKey, 1)
-	url = strings.Replace(url, "{repoPath}", repoPath, 1)
-	url = strings.Replace(url, "{properties}", properties, 1)
+	urlstr := "/open/api/v1/storage/properties/{repoKey}/{repoPath}?propertySourceType=${propertySourceType}&&properties={properties}"
+	urlstr = strings.Replace(urlstr, "{repoKey}", repoKey, 1)
+	urlstr = strings.Replace(urlstr, "{repoPath}", repoPath, 1)
+	urlstr = strings.Replace(urlstr, "{propertySourceType}", "oldRepo", 1)
+	urlstr = strings.Replace(urlstr, "{properties}", url.QueryEscape(properties), 1)
 
-	statusCode, err := util.Client.Put(r.HttpClient.BaseURL+url, r.HttpClient.Header, "application/json", nil, nil)
+	//urlstr = url.QueryEscape(urlstr)
+
+	statusCode, err := util.Client.Put(r.HttpClient.BaseURL+urlstr, r.HttpClient.Header, "application/json", nil, nil)
 	if err != nil {
 		context.Loggers.SendLoggerError("API更新制品属性失败: ", err)
 	}
@@ -179,9 +184,31 @@ func (r *Repo) ExistProject(context *config.Context, projectKey string) bool {
 	url = strings.Replace(url, "{projectKey}", projectKey, 1)
 
 	statusCode, err := util.Client.Get(r.HttpClient.BaseURL+url, r.HttpClient.Header, nil, nil)
-
+	if statusCode == 404 {
+		return false
+	}
 	if err != nil {
 		context.Loggers.SendLoggerError("API创建空间失败: ", err)
+	}
+	if statusCode == 200 {
+		return true
+	}
+	return false
+}
+
+/**
+索引刷新
+*/
+func (r *Repo) ReIndex(context *config.Context, repoKey string) bool {
+	url := "/ui/tree-browser/artifact/action/calculateIndex/{repoKey}"
+	url = strings.Replace(url, "{repoKey}", repoKey, 1)
+
+	statusCode, err := util.Client.Post(r.HttpClient.BaseURL+url, r.HttpClient.Header, nil, nil)
+	if statusCode == 404 {
+		return false
+	}
+	if err != nil {
+		context.Loggers.SendLoggerError("API创建刷新索引失败: ", err)
 	}
 	if statusCode == 200 {
 		return true

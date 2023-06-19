@@ -17,6 +17,7 @@ type Config struct {
 }
 
 type Repo struct {
+	Id       string `yaml:"id"`
 	URL      string `yaml:"url"`
 	Type     string `yaml:"type"`
 	Username string `yaml:"username"`
